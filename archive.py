@@ -2,6 +2,7 @@ import datetime
 import os
 import shutil
 
+
 class FoldersArchiver:
     def __init__(self):
         self.now = datetime.datetime.now()
@@ -11,7 +12,7 @@ class FoldersArchiver:
         self.hour = self.now.hour
         self.minute = self.now.minute
         self.second = self.now.second
-        
+
         if self.month == 1:
             self.beforeMonth = 11
             self.year -= 1
@@ -19,9 +20,8 @@ class FoldersArchiver:
             self.beforeMonth = 12
             self.year -= 1
         else:
-            # self.beforeMonth = self.month - 2
-            self.beforeMonth = self.month
-        
+            self.beforeMonth = self.month - 2
+
         self.sYear = str(self.year)
         self.sShortYear = self.now.strftime("%y")
         self.sMonth = str(self.month)
@@ -31,12 +31,13 @@ class FoldersArchiver:
         self.sMinute = str(self.minute)
         self.sSecond = str(self.second)
 
-        self.mainDir = "r:\\"
+        self.mainDir = "p:\\"
         # self.mainDir = "/home/zbyszek/python/p"
-    
+
     def archive(self):
         for (root, dirs, files) in os.walk(self.mainDir):
-            log = open(self.sShortYear + self.sMonth + self.sDay + '_' + self.sHour + '-' + self.sMinute + '-' + self.sSecond + '.log', 'a+')
+            log = open(self.sShortYear + self.sMonth + self.sDay + '_' +
+                       self.sHour + '-' + self.sMinute + '-' + self.sSecond + '.log', 'a+')
             for folder in dirs:
                 if folder.startswith(self.sShortYear + self.sBeforeMonth + '_'):
                     if self.sYear in root:
@@ -51,6 +52,8 @@ class FoldersArchiver:
                             print(os.path.join(root, folder) + "\tmoved")
                             log.write(os.path.join(root, folder) + "\tmoved\n")
                         except:
-                            print("ERROR!\t" + os.path.join(root, folder) + "\thasn't moved!")
-                            log.write("ERROR!\t" + os.path.join(root, folder) + "\thasn't moved!\n")
+                            print("ERROR!\t" + os.path.join(root,
+                                                            folder) + "\thasn't moved!")
+                            log.write("ERROR!\t" + os.path.join(root,
+                                                                folder) + "\thasn't moved!\n")
             log.close()
