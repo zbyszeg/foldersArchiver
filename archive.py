@@ -7,6 +7,10 @@ class FoldersArchiver:
         self.now = datetime.datetime.now()
         self.year = self.now.year
         self.month = self.now.month
+        self.day = self.now.day
+        self.hour = self.now.hour
+        self.minute = self.now.minute
+        self.second = self.now.second
         
         if self.month == 1:
             self.beforeMonth = 11
@@ -15,19 +19,24 @@ class FoldersArchiver:
             self.beforeMonth = 12
             self.year -= 1
         else:
-            self.beforeMonth = self.month - 2
+            # self.beforeMonth = self.month - 2
+            self.beforeMonth = self.month
         
         self.sYear = str(self.year)
         self.sShortYear = self.now.strftime("%y")
         self.sMonth = str(self.month)
         self.sBeforeMonth = str(self.beforeMonth)
+        self.sDay = str(self.day)
+        self.sHour = str(self.hour)
+        self.sMinute = str(self.minute)
+        self.sSecond = str(self.second)
 
-        # self.mainDir = "p:\\"
-        self.mainDir = "/home/zbyszek/python/p"
+        self.mainDir = "r:\\"
+        # self.mainDir = "/home/zbyszek/python/p"
     
     def archive(self):
         for (root, dirs, files) in os.walk(self.mainDir):
-            log = open(self.now.strftime("%c") + '.log', 'a+')
+            log = open(self.sShortYear + self.sMonth + self.sDay + '_' + self.sHour + '-' + self.sMinute + '-' + self.sSecond + '.log', 'a+')
             for folder in dirs:
                 if folder.startswith(self.sShortYear + self.sBeforeMonth + '_'):
                     if self.sYear in root:
