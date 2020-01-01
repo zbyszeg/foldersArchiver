@@ -12,18 +12,21 @@ class FoldersArchiver:
         self.hour = self.now.hour
         self.minute = self.now.minute
         self.second = self.now.second
+        self.shortYear = int(self.now.strftime("%y"))
 
         if self.month == 1:
             self.beforeMonth = 11
             self.year -= 1
+            self.shortYear -= 1
         elif self.month == 2:
             self.beforeMonth = 12
             self.year -= 1
+            self.shortYear -= 1
         else:
             self.beforeMonth = self.month - 2
 
         self.sYear = str(self.year)
-        self.sShortYear = self.now.strftime("%y")
+        self.sShortYear = str(self.shortYear)
         self.sMonth = str(self.month)
         self.sBeforeMonth = str(self.beforeMonth)
         self.sDay = str(self.day)
@@ -36,13 +39,12 @@ class FoldersArchiver:
 
     def archive(self):
         for (root, dirs, files) in os.walk(self.mainDir):
-            log = open(self.sShortYear + self.sMonth + self.sDay + '_' +
+            log = open(str(self.now.year) + '-' + self.sMonth + '-' + self.sDay + '_' +
                        self.sHour + '-' + self.sMinute + '-' + self.sSecond + '.log', 'a+')
             for folder in dirs:
                 if folder.startswith(self.sShortYear + self.sBeforeMonth + '_'):
-                    if self.sYear in root:
-                        pass
-                    else:
+                    # or folder.startswith('Q' + self.sShortYear + self.sBeforeMonth + '_')
+                    if not self.sYear in root:
                         source = os.path.join(root, folder)
                         target = os.path.join(root, self.sYear)
                         if os.path.isdir(target) == False:
