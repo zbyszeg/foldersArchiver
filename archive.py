@@ -28,13 +28,18 @@ class FoldersArchiver:
         self.sYear = str(self.year)
         self.sShortYear = str(self.shortYear)
         self.sMonth = str(self.month)
-        self.sBeforeMonth = str(self.beforeMonth)
+        
+        if 1 <= self.beforeMonth <= 9:
+            self.sBeforeMonth = '0' + str(self.beforeMonth)
+        else:
+            self.sBeforeMonth = str(self.beforeMonth)
+        
         self.sDay = str(self.day)
         self.sHour = str(self.hour)
         self.sMinute = str(self.minute)
         self.sSecond = str(self.second)
 
-        self.mainDir = "p:\\"
+        self.mainDir = "r:\\"
         # self.mainDir = "/home/zbyszek/python/p"
 
     def archive(self):
