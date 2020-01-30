@@ -28,18 +28,18 @@ class FoldersArchiver:
         self.sYear = str(self.year)
         self.sShortYear = str(self.shortYear)
         self.sMonth = str(self.month)
-        
+
         if 1 <= self.beforeMonth <= 9:
             self.sBeforeMonth = '0' + str(self.beforeMonth)
         else:
             self.sBeforeMonth = str(self.beforeMonth)
-        
+
         self.sDay = str(self.day)
         self.sHour = str(self.hour)
         self.sMinute = str(self.minute)
         self.sSecond = str(self.second)
 
-        self.mainDir = "r:\\"
+        self.mainDir = "p:\\"
         # self.mainDir = "/home/zbyszek/python/p"
 
     def archive(self):
@@ -47,11 +47,12 @@ class FoldersArchiver:
             log = open(str(self.now.year) + '-' + self.sMonth + '-' + self.sDay + '_' +
                        self.sHour + '-' + self.sMinute + '-' + self.sSecond + '.log', 'a+')
             for folder in dirs:
-                if folder.startswith(self.sShortYear + self.sBeforeMonth + '_') or folder.startswith('Q' + self.sShortYear + self.sBeforeMonth + '_'):
+                if folder.startswith(self.sShortYear + self.sBeforeMonth + '_') or folder.startswith(
+                        'Q' + self.sShortYear + self.sBeforeMonth + '_'):
                     if not self.sYear in root:
                         source = os.path.join(root, folder)
                         target = os.path.join(root, self.sYear)
-                        if os.path.isdir(target) == False:
+                        if not os.path.isdir(target):
                             os.makedirs(target)
                         try:
                             shutil.move(source, target)
