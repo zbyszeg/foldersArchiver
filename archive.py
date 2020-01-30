@@ -47,8 +47,7 @@ class FoldersArchiver:
             log = open(str(self.now.year) + '-' + self.sMonth + '-' + self.sDay + '_' +
                        self.sHour + '-' + self.sMinute + '-' + self.sSecond + '.log', 'a+')
             for folder in dirs:
-                if folder.startswith(self.sShortYear + self.sBeforeMonth + '_'):
-                    # or folder.startswith('Q' + self.sShortYear + self.sBeforeMonth + '_')
+                if folder.startswith(self.sShortYear + self.sBeforeMonth + '_') or folder.startswith('Q' + self.sShortYear + self.sBeforeMonth + '_'):
                     if not self.sYear in root:
                         source = os.path.join(root, folder)
                         target = os.path.join(root, self.sYear)
