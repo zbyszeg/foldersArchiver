@@ -39,28 +39,28 @@ class FoldersArchiver:
         self.sMinute = str(self.minute)
         self.sSecond = str(self.second)
 
-        self.mainDir = "p:\\"
-        # self.mainDir = "/home/zbyszek/python/p"
+        # self.mainDir = "p:\\"
+        self.mainDir = "/home/zbyszek/python/p"
 
     def archive(self):
         for (root, dirs, files) in os.walk(self.mainDir):
             log = open(str(self.now.year) + '-' + self.sMonth + '-' + self.sDay + '_' +
                        self.sHour + '-' + self.sMinute + '-' + self.sSecond + '.log', 'a+')
             for folder in dirs:
-                if folder.startswith(self.sShortYear + self.sBeforeMonth + '_') or folder.startswith(
+                if self.sYear in root:
+                    continue
+                elif folder.startswith(self.sShortYear + self.sBeforeMonth + '_') or folder.startswith(
                         'Q' + self.sShortYear + self.sBeforeMonth + '_'):
-                    if not self.sYear in root:
-                        source = os.path.join(root, folder)
-                        target = os.path.join(root, self.sYear)
-                        if not os.path.isdir(target):
-                            os.makedirs(target)
-                        try:
-                            shutil.move(source, target)
-                            print(os.path.join(root, folder) + "\tmoved")
-                            log.write(os.path.join(root, folder) + "\tmoved\n")
-                        except:
-                            print("ERROR!\t" + os.path.join(root,
-                                                            folder) + "\thasn't moved!")
-                            log.write("ERROR!\t" + os.path.join(root,
-                                                                folder) + "\thasn't moved!\n")
+                    # if not self.sYear in root:
+                    source = os.path.join(root, folder)
+                    target = os.path.join(root, self.sYear)
+                    if not os.path.isdir(target):
+                        os.makedirs(target)
+                    try:
+                        shutil.move(source, target)
+                        print(os.path.join(root, folder) + "\tmoved")
+                        log.write(os.path.join(root, folder) + "\tmoved\n")
+                    except NotADirectoryError:
+                        print("ERROR!\t" + os.path.join(root, folder) + "\thasn't moved!")
+                        log.write("ERROR!\t" + os.path.join(root, folder) + "\thasn't moved!\n")
             log.close()
