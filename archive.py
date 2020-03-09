@@ -39,8 +39,7 @@ class FoldersArchiver:
         self.sMinute = str(self.minute)
         self.sSecond = str(self.second)
 
-        # self.mainDir = "p:\\"
-        self.mainDir = "/home/zbyszek/python/p"
+        self.mainDir = "p:\\"
 
     def archive(self):
         for (root, dirs, files) in os.walk(self.mainDir):
@@ -51,7 +50,6 @@ class FoldersArchiver:
                     continue
                 elif folder.startswith(self.sShortYear + self.sBeforeMonth + '_') or folder.startswith(
                         'Q' + self.sShortYear + self.sBeforeMonth + '_'):
-                    # if not self.sYear in root:
                     source = os.path.join(root, folder)
                     target = os.path.join(root, self.sYear)
                     if not os.path.isdir(target):
